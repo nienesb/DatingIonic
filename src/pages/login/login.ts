@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { AuthService } from '../providers/auth-service';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-login',
@@ -8,7 +9,7 @@ import { AuthService } from '../providers/auth-service';
 })
 export class LoginPage {
   loading: Loading;
-  registerCredentials = { email: '', password: '' };
+  registerCredentials = { email: 'test', password: 'test' };
 
 
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
@@ -17,7 +18,7 @@ export class LoginPage {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
         if (allowed) {
-          this.nav.setRoot('HomePage');
+          this.nav.setRoot(TabsPage);
         } else {
           this.showError("Access Denied");
         }
