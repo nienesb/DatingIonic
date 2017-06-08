@@ -9,6 +9,7 @@ import { AuthService } from '../providers/auth-service';
 export class LoginPage {
   loading: Loading;
   registerCredentials = { email: '', password: '' };
+  //hallo
 
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
 
