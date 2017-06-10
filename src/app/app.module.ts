@@ -16,6 +16,7 @@ import { AuthService } from '../providers/auth-service';
 import { StatisticProvider } from '../providers/statistic/statistic';
 import { HttpModule } from "@angular/http";
 import { PlatformProvider } from '../providers/platform/platform';
+import {DailyStatPage} from "../pages/daily-stat/daily-stat";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { PlatformProvider } from '../providers/platform/platform';
     ContactPage,
     HomePage,
     TabsPage,
-    LoginPage
+    LoginPage,
+    DailyStatPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { PlatformProvider } from '../providers/platform/platform';
     ContactPage,
     HomePage,
     TabsPage,
-    LoginPage
+    LoginPage,
+    DailyStatPage
   ],
   providers: [
     StatusBar,

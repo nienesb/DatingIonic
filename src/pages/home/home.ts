@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import {Http} from "@angular/http";
 import {StatisticProvider} from "../../providers/statistic/statistic";
 import {PlatformProvider} from "../../providers/platform/platform";
+import {DailyStatPage} from "../daily-stat/daily-stat";
 
 @Component({
   selector: 'page-home',
@@ -41,7 +42,12 @@ export class HomePage {
   }
 
   openDetailPage(dailyStat) {
-    alert('hier wordt er een nieuwe pagina geopend');
+    this.navCtrl.push(DailyStatPage, {dailyStat: dailyStat});
+  }
+
+  openNotes(dailyStat) {
+    //TODO OPEN NOTITIE PAGINA
+    alert('hier wordt notitie pagina geopend');
   }
 
   ngOnInit(): void {

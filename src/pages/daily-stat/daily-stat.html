@@ -1,0 +1,47 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>dailyStat</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+
+    <ion-card-header>
+      Name
+    </ion-card-header>
+
+    <ion-card-content>
+     {{dailyStat.platform.hostname}}
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-header>
+      Manager
+    </ion-card-header>
+
+    <ion-card-content>
+      {{dailyStat.manager.name}}
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-header>
+      Target
+    </ion-card-header>
+
+    <ion-card-content>
+      {{dailyStat.target}}
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>
