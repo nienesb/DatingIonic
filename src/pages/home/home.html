@@ -6,19 +6,14 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item-sliding *ngFor="let stat of dailyTargets">
+    <ion-item-sliding *ngFor="let stat of dailyTargets" (click)="openDetailPage(stat)">
       <ion-item>
-        <h2>Webpagina Naam</h2>
+        <h2>{{stat.platform.hostname}}</h2>
+        <h4>Target: {{stat.target}}</h4>
       </ion-item>
-      <ion-item-options side="left">
-        <button ion-button color="primary">
-          <ion-icon name="ion-stats-bars"></ion-icon>
-          Detail Pagina
-        </button>
-      </ion-item-options>
       <ion-item-options side="right">
         <button ion-button color="primary">
-          <ion-icon name="ion-document"></ion-icon>
+          <ion-icon name="ion-document" class="ion-document"></ion-icon>
           Notitie
         </button>
       </ion-item-options>

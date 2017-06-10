@@ -3,21 +3,10 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Http, Headers, Response} from "@angular/http";
 
-export class User {
-  name: string;
-  email: string;
-
-  constructor( name: string, email: string) {
-    this.name = name;
-    this.email = email;
-
-  }
-}
-
 @Injectable()
 export class AuthService {
   baseUrl: String = "https://rest-api.janine.project89109.nl";
-  currentUser: User;
+  currentUser: {};
   apiToken: String;
 
   constructor(private http: Http) {}
@@ -35,7 +24,7 @@ export class AuthService {
     }
   }
 
-  public getUserInfo() : User {
+  public getUserInfo() {
     return this.currentUser;
   }
 

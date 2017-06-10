@@ -1,18 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http , Response, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {AuthService} from "../auth-service";
 
-/*
-  Generated class for the PlatformProvider provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class PlatformProvider {
 
-  constructor(public http: Http) {
-    console.log('Hello PlatformProvider Provider');
+  apiToken: String;
+  baseUrl: string = "https://rest-api.janine.project89109.nl/platforms";
+  private headers = new Headers();
+  constructor(public http: Http, private authService: AuthService) {
   }
 
+  setHeaders() {
+    this.apiToken = this.authService.getToken();
+    this.headers.append("Authorization", "token "+this.apiToken);
+  }
+  getPlatforms() {
+    this.setHeaders();
+    return this.http.get(this.baseUrl, {headers: this.headers})
+      .map((res: Response) => {
+        return res.json();
+      })
+  }
 }
