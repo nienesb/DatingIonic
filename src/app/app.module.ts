@@ -13,7 +13,9 @@ import { LoginPage } from '../pages/login/login';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthService } from '../providers/auth-service';
-import { StatisticServiceProvider } from '../providers/statistic-service/statistic-service';
+import { StatisticProvider } from '../providers/statistic/statistic';
+import { HttpModule } from "@angular/http";
+import { PlatformProvider } from '../providers/platform/platform';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { StatisticServiceProvider } from '../providers/statistic-service/statist
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -42,7 +45,8 @@ import { StatisticServiceProvider } from '../providers/statistic-service/statist
     SplashScreen,
     AuthService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    StatisticServiceProvider
+    StatisticProvider,
+    PlatformProvider
   ]
 })
 export class AppModule {}

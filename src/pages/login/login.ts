@@ -17,14 +17,10 @@ export class LoginPage {
   public login() {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
-        if (allowed) {
-          this.nav.setRoot(TabsPage);
-        } else {
-          this.showError("Access Denied");
-        }
+        this.nav.setRoot(TabsPage);
       },
       error => {
-        this.showError(error);
+        this.showError("Login Failed");
       });
   }
 
