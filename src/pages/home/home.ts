@@ -4,6 +4,7 @@ import {Http} from "@angular/http";
 import {StatisticProvider} from "../../providers/statistic/statistic";
 import {PlatformProvider} from "../../providers/platform/platform";
 import {DailyStatPage} from "../daily-stat/daily-stat";
+import {AddNotePage} from "../notities-pages/add-note/add-note";
 
 @Component({
   selector: 'page-home',
@@ -46,8 +47,7 @@ export class HomePage {
   }
 
   openNotes(dailyStat) {
-    //TODO OPEN NOTITIE PAGINA
-    alert('hier wordt notitie pagina geopend');
+    this.navCtrl.setRoot(AddNotePage);
   }
 
   ngOnInit(): void {
