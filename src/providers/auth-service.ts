@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Http, Headers, Response} from "@angular/http";
@@ -10,13 +10,19 @@ export class AuthService {
   currentUser: {};
   apiToken: String;
 
-  constructor(private http: Http, private fAuth: AngularFireAuth) {}
+  constructor(private http: Http, private fAuth: AngularFireAuth) {
+  }
 
   public login(credentials) {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");
     } else {
-      return this.http.get(this.baseUrl + "/authentication/token?username="+credentials.email+"&password="+credentials.password)
+      //Firebase
+      this.fAuth.auth.signInWithEmailAndPassword(credentials.email + "@dating.nl", credentials.password).then(user => {
+        console.log(user.uid);
+      });
+      //API
+      return this.http.get(this.baseUrl + "/authentication/token?username=" + credentials.email + "&password=" + credentials.password)
         .map((res: Response) => {
           const response = res.json();
           this.apiToken = response.token;

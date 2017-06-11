@@ -18,6 +18,7 @@ export class LoginPage {
   public login() {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
+      console.log(allowed);
         this.nav.setRoot(TabsPage);
       },
       error => {
