@@ -26,4 +26,8 @@ export class NotitiesPage {
     this.nav.setRoot(AddNotePage);
   }
 
+  private deleteNote (note) {
+    this.notes.remove(note);
+  }
+
 }
