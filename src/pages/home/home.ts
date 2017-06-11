@@ -11,7 +11,7 @@ import {AddNotePage} from "../notities-pages/add-note/add-note";
   templateUrl: 'home.html'
 })
 export class HomePage {
-  dailyTargets;
+  dailyPrognostic;
   platforms;
 
   constructor(public navCtrl: NavController, private http: Http, private statsProvider: StatisticProvider, private platformsProvider: PlatformProvider) {
@@ -19,14 +19,14 @@ export class HomePage {
   }
 
   getDailyTargets() {
-    this.statsProvider.getDailyTargets().subscribe(stats => {
-      this.dailyTargets = stats;
+    this.statsProvider.getDailyPrognostics().subscribe(stats => {
+      this.dailyPrognostic = stats;
       this.addPlatformsToStats();
     })
   }
 
   private addPlatformsToStats() {
-    for (let dailyTarget of this.dailyTargets) {
+    for (let dailyTarget of this.dailyPrognostic) {
       for (let platform of this.platforms) {
         if (dailyTarget.platformId == platform.id) {
           dailyTarget.platform = platform;
@@ -38,7 +38,7 @@ export class HomePage {
   getPlatforms() {
     this.platformsProvider.getPlatforms().subscribe(platforms => {
       this.platforms = platforms;
-    })
+    });
     console.log(this.platforms);
   }
 

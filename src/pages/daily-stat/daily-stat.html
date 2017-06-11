@@ -16,7 +16,8 @@
     </ion-card-header>
 
     <ion-card-content>
-     {{dailyStat.platform.hostname}}
+      {{dailyStat.platform.name}}<br>
+      {{dailyStat.platform.hostname}}
     </ion-card-content>
 
   </ion-card>
@@ -24,24 +25,28 @@
   <ion-card>
 
     <ion-card-header>
-      Manager
+      Statistics
     </ion-card-header>
-
     <ion-card-content>
-      {{dailyStat.manager.name}}
+      <h4>Profit Percentage</h4> <br>
+      {{dailyStat.profitPercentage}}% <hr>
+      <h4>Score</h4> <br>
+      {{dailyStat.score}}<hr>
+      <h4>Proceeds target</h4> <br>
+      {{dailyStat.proceedsTarget}} <hr>
+      <h4>Proceeds prognostic</h4> <br>
+      {{dailyStat.proceedsPrognostic}}
     </ion-card-content>
 
   </ion-card>
 
   <ion-card>
-
     <ion-card-header>
-      Target
+      Visual Statistics
     </ion-card-header>
-
     <ion-card-content>
-      {{dailyStat.target}}
+      <canvas #barCanvas></canvas>
     </ion-card-content>
-
   </ion-card>
+
 </ion-content>

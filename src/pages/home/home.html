@@ -6,10 +6,10 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item-sliding *ngFor="let stat of dailyTargets" (click)="openDetailPage(stat)">
+    <ion-item-sliding *ngFor="let stat of dailyPrognostic" (click)="openDetailPage(stat)">
       <ion-item>
         <h2>{{stat.platform.hostname}}</h2>
-        <h4>Target: {{stat.target}}</h4>
+        <h4>Profit Percentage: {{stat.profitPercentage}}%</h4>
       </ion-item>
       <ion-item-options side="right">
         <button ion-button color="primary">
