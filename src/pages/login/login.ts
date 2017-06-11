@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
 import { TabsPage } from '../tabs/tabs';
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Component({
   selector: 'page-login',
@@ -9,7 +10,7 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class LoginPage {
   loading: Loading;
-  registerCredentials = { email: 'test', password: 'test' };
+  registerCredentials = { email: 'janine', password: 'greatplacetowork' };
 
 
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }

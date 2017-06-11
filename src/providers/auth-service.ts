@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Http, Headers, Response} from "@angular/http";
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Injectable()
 export class AuthService {
@@ -9,7 +10,7 @@ export class AuthService {
   currentUser: {};
   apiToken: String;
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private fAuth: AngularFireAuth) {}
 
   public login(credentials) {
     if (credentials.email === null || credentials.password === null) {
