@@ -25,6 +25,7 @@
     "@ionic-native/status-bar": "3.10.2",
     "@ionic/storage": "2.0.1",
     "angularfire2": "^4.0.0-rc.1",
+    "chart.js": "^2.6.0",
     "firebase": "^4.1.2",
     "ionic-angular": "3.3.0",
     "ionicons": "3.0.0",

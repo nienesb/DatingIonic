@@ -8,8 +8,14 @@ import {AddNotePage} from "../notities-pages/add-note/add-note";
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  styles: [`
+    h2{
+      font-weight: bold;
+    }
+  `]
 })
+
 export class HomePage {
   dailyPrognostic;
   platforms;
