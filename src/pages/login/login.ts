@@ -9,7 +9,7 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class LoginPage {
   loading: Loading;
-  registerCredentials = { email: 'test', password: 'test' };
+  registerCredentials = { email: 'janine', password: 'greatplacetowork' }; //TODO REMOVE PRESET FOR PRODUCTION
 
 
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }

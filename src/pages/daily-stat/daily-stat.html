@@ -33,9 +33,20 @@
       <h4>Score</h4> <br>
       {{dailyStat.score}}<hr>
       <h4>Proceeds target</h4> <br>
-      {{dailyStat.proceedsTarget}}
+      {{dailyStat.proceedsTarget}} <hr>
+      <h4>Proceeds prognostic</h4> <br>
+      {{dailyStat.proceedsPrognostic}}
     </ion-card-content>
 
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Visual Statistics
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #barCanvas></canvas>
+    </ion-card-content>
   </ion-card>
 
 </ion-content>
