@@ -24,6 +24,14 @@ export class StatisticProvider {
       })
   }
 
+  getDailyPrognostics() {
+    this.setHeaders();
+    return this.http.get(this.baseUrl + "/dailyprognostic", {headers: this.headers})
+      .map((res: Response) => {
+        return res.json();
+      })
+  }
+
 
 
 
