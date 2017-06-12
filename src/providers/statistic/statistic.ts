@@ -18,7 +18,7 @@ export class StatisticProvider {
   }
   getDailyTargets() {
     this.setHeaders();
-    return this.http.get(this.baseUrl + "/stats/daily-targets", {headers: this.headers})
+    return this.http.get(this.baseUrl + "/stats/daily-targets?year=2017&month=6", {headers: this.headers})
       .map((res: Response) => {
         return res.json();
       })
@@ -26,7 +26,7 @@ export class StatisticProvider {
 
   getDailyPrognostics() {
     this.setHeaders();
-    return this.http.get(this.baseUrl + "/stats/dailyprognostic", {headers: this.headers})
+    return this.http.get(this.baseUrl + "/stats/dailyprognostic?year=2017&month=4", {headers: this.headers})
       .map((res: Response) => {
         return res.json();
       })
@@ -34,7 +34,7 @@ export class StatisticProvider {
 
   getMonthlyPrognostic() {
     this.setHeaders();
-    return this.http.get(this.baseUrl + "/stats/monthly-prognostic/platforms?start=2017-05-01&end=2017-06-01", {headers: this.headers})
+    return this.http.get(this.baseUrl + "/stats/monthly-prognostic/platforms?start=2017-05-01%2000%3A00%3A00&end=2017-05-31%2000%3A00%3A00", {headers: this.headers})
       .map((res: Response) => {
         return res.json();
       })
