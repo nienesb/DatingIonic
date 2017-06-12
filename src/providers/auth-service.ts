@@ -17,18 +17,18 @@ export class AuthService {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");
     } else {
-      //Firebase
-      this.fAuth.auth.signInWithEmailAndPassword(credentials.email + "@dating.nl", credentials.password).then(user => {
-        console.log(user.uid);
-      });
-      //API
+
       return this.http.get(this.baseUrl + "/authentication/token?username=" + credentials.email + "&password=" + credentials.password)
         .map((res: Response) => {
           const response = res.json();
           this.apiToken = response.token;
+          this.fAuth.auth.signInWithEmailAndPassword(credentials.email + "@dating.nl", credentials.password).then(user => {
+            console.log(user.uid);
+          });
           return response;
         })
     }
+
   }
 
   public getUserInfo() {

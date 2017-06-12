@@ -18,16 +18,32 @@ import {AddNotePage} from "../notities-pages/add-note/add-note";
 
 export class HomePage {
   dailyPrognostic;
+  monthlyPrognostic;
   platforms;
+  showPage;
+  managers;
+  partners;
 
   constructor(public navCtrl: NavController, private http: Http, private statsProvider: StatisticProvider, private platformsProvider: PlatformProvider) {
-
+    this.showPage = "dailyPrognostic";
   }
 
   getDailyTargets() {
     this.statsProvider.getDailyPrognostics().subscribe(stats => {
       this.dailyPrognostic = stats;
       this.addPlatformsToStats();
+    })
+  }
+
+  getMonthlyPrognostic() {
+    this.statsProvider.getMonthlyPrognostic().subscribe(stats => {
+      this.monthlyPrognostic = stats;
+    })
+  }
+
+  getManagers() {
+    this.statsProvider.getManagers().subscribe(stats => {
+      this.managers = stats;
     })
   }
 
@@ -59,5 +75,14 @@ export class HomePage {
   ngOnInit(): void {
     this.getPlatforms();
     this.getDailyTargets();
+    this.getMonthlyPrognostic();
+    this.getManagers();
+    this.getPartners();
+  }
+
+  private getPartners() {
+    this.statsProvider.getPartners().subscribe(partners => {
+      this.partners = partners;
+    });
   }
 }
