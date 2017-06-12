@@ -9,7 +9,6 @@ export class AuthService {
   baseUrl: String = "https://rest-api.janine.project89109.nl";
   currentUser: {};
   apiToken: String;
-
   constructor(private http: Http, private fAuth: AngularFireAuth) {
   }
 
@@ -17,7 +16,6 @@ export class AuthService {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");
     } else {
-
       return this.http.get(this.baseUrl + "/authentication/token?username=" + credentials.email + "&password=" + credentials.password)
         .map((res: Response) => {
           const response = res.json();
@@ -28,7 +26,6 @@ export class AuthService {
           return response;
         })
     }
-
   }
 
   public getUserInfo() {

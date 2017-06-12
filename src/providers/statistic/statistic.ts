@@ -34,7 +34,8 @@ export class StatisticProvider {
 
   getMonthlyPrognostic() {
     this.setHeaders();
-    return this.http.get(this.baseUrl + "/stats/monthly-prognostic/platforms?start=2017-05-01%2000%3A00%3A00&end=2017-05-31%2000%3A00%3A00", {headers: this.headers})
+    return this.http.get(this.baseUrl + "/stats/monthly-prognostic/platforms?start=2017-05-01%2000%3A00%3A00&end=2017-05-31%2000%3A00%3A00",
+      {headers: this.headers})
       .map((res: Response) => {
         return res.json();
       })
