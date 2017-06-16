@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content padding>
+
   <div>
     <h4>Weergave: </h4>
     <ion-select [(ngModel)]="showPage">
@@ -15,6 +16,7 @@
       <ion-option value="partners">Green8Group partners</ion-option>
     </ion-select>
   </div>
+
   <ion-list *ngIf="showPage == 'dailyPrognostic'">
     <ion-item-sliding *ngFor="let stat of dailyPrognostic">
       <ion-item (click)="openDetailPage(stat)">

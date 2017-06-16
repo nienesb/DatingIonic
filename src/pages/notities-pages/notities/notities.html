@@ -6,11 +6,9 @@
 
 </ion-header>
 
-
 <ion-content padding>
 
   <ion-list>
-
     <ion-item-sliding *ngFor="let note of notes | async">
       <ion-item>
         <h3>{{note.title}}</h3>
@@ -23,7 +21,6 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
-
   </ion-list>
 
   <ion-buttons end>

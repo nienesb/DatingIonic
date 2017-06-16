@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
-import { TabsPage } from '../tabs/tabs';
-import {AngularFireAuth} from "angularfire2/auth";
+import { HomePage } from "../home/home";
 
 @Component({
   selector: 'page-login',
@@ -19,7 +18,7 @@ export class LoginPage {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
       console.log(allowed);
-        this.nav.setRoot(TabsPage);
+        this.nav.setRoot(HomePage);
       },
       error => {
         this.showError("Login Failed");

@@ -41,21 +41,5 @@ export class StatisticProvider {
       })
   }
 
-  getManagers() {
-    this.setHeaders();
-    return this.http.get(this.baseUrl + "/managers", {headers: this.headers})
-      .map((res: Response) => {
-        return res.json();
-      })
-  }
-
-  getPartners() {
-    this.setHeaders();
-    return this.http.get(this.baseUrl + "/partners", {headers: this.headers})
-      .map((res: Response) => {
-        return res.json();
-      })
-  }
-
 
 }
