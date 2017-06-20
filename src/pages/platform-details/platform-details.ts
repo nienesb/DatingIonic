@@ -18,7 +18,7 @@ import { Chart } from 'chart.js';
   templateUrl: 'platform-details.html',
 })
 export class PlatformDetailsPage {
-  @ViewChild('lineCanvas') lineCanvas;
+  @ViewChild('lineCanvas') lineCanvas =  new Chart();
   public prognostics;
   public platform = this.navParams.get("platform");
   public selectedDate: any = moment().hour(1).minute(0).toISOString();
@@ -33,24 +33,28 @@ export class PlatformDetailsPage {
     this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
     console.log(this.selectedDate);
     this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
+    
   }
 
   ionViewDidLoad()
   {
-    this.getPrognostics(this.platform.id, this.selectedDate, this.endDate)
+    this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
+    this.createCanvas(this.scoreArray, this.labelArray);
   }
 
   getPrognostics(platformId, start, end) {
     this.statsProvider.getDailyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
       if(data) {
         this.prognostics = data;
-        this.scoreArray = [];
-        this.labelArray = [];
+        this.scoreArray.pop();
+        this.labelArray.pop();
         for(let prognostic of this.prognostics) {
           this.scoreArray.push(parseInt(prognostic.score));
           this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
         }
-        this.createCanvas(this.scoreArray, this.labelArray);
+        if(this.lineCanvas) {
+           this.updateCanvas(this.scoreArray, this.labelArray);
+        }
       }
     }, error => {
       console.log('Data gave error, not building canvas: ' + error);
@@ -72,5 +76,14 @@ export class PlatformDetailsPage {
             }
       });
     }
+  }
+
+  private updateCanvas(scoreArray, labelArray) {
+    this.lineCanvas.datasets = [{
+                  data: this.scoreArray,
+                  label: "Score"
+                }];
+
+    this.lineCanvas.update();
   }
 }
