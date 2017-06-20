@@ -16,4 +16,33 @@
     <ion-label>Datum</ion-label>
     <ion-datetime displayFormat="DD-MM-YYYY" [(ngModel)]="selectedDate" (ionChange)="updateDate()"></ion-datetime>
   </ion-item>
+
+  <hr>
+  <ion-card>
+    <ion-card-header>
+      Name
+    </ion-card-header>
+
+    <ion-card-content>
+      {{platform.name}}<br>
+      {{platform.hostname}}
+    </ion-card-content>
+
+  </ion-card>
+  <hr>
+  <div *ngFor="let prognostic of prognostics">
+
+    <ion-card>
+
+      <ion-card-header>
+        Statistics
+      </ion-card-header>
+      <ion-card-content>
+
+      </ion-card-content>
+
+    </ion-card>
+  </div>
 </ion-content>
+
+

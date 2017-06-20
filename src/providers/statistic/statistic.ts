@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http , Response, Headers} from '@angular/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {AuthService} from "../auth-service";
 
@@ -41,5 +41,12 @@ export class StatisticProvider {
       })
   }
 
+  getDailyPrognosticForPlatform(platform: number, start: string, end: string) {
+    this.setHeaders();
+    return this.http.get(this.baseUrl + "/stats/dailyprognostic?platformId="+platform+"&start="+start+"&end="+end, {headers: this.headers})
+      .map((res: Response) => {
+        return res.json();
+      })
+  }
 
 }

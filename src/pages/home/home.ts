@@ -37,8 +37,10 @@ export class HomePage {
     this.navCtrl.setRoot(AddNotePage);
   }
 
-  ngOnInit(): void {
-    this.getPlatforms();
+  ngAfterViewInit() {
+    this.navCtrl.viewDidEnter.subscribe((data) => {
+      this.getPlatforms();
+    });
   }
 
 }

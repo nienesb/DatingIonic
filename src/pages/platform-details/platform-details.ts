@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as moment from 'moment';
 import 'moment/locale/nl';
+import {StatisticProvider} from "../../providers/statistic/statistic";
 
 
 /**
@@ -16,22 +17,32 @@ import 'moment/locale/nl';
   templateUrl: 'platform-details.html',
 })
 export class PlatformDetailsPage {
+  public prognostics;
+  public platform = this.navParams.get("platform");
   public selectedDate: any = moment().toISOString();
   public endDate: any = moment(this.selectedDate).add(1, 'days').toISOString();
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) {
   }
 
   updateDate() {
     this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
-    console.log('~~~~Updated endDate~~~~');
-    console.log('endDate: ' + this.endDate);
+    this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad()
+  {
     console.log('ionViewDidLoad PlatformDetailsPage');
-    console.log('selectedDate: ' + this.selectedDate);
-    console.log('endDate: ' + this.endDate);
+    console.log('Date: ' + this.selectedDate);
+    this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
+
   }
+
+  getPrognostics(platformId, start, end) {
+    this.statsProvider.getDailyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
+      this.prognostics = data;
+      console.log(data)
+    });
+  }
+
 
 }
