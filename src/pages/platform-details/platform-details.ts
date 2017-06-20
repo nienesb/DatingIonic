@@ -21,8 +21,10 @@ export class PlatformDetailsPage {
   @ViewChild('lineCanvas') lineCanvas;
   public prognostics;
   public platform = this.navParams.get("platform");
-  public selectedDate: any = moment().toISOString();
+  public selectedDate: any = moment().hour(1).minute(0).toISOString();
   public endDate: any = moment(this.selectedDate).add(1, 'days').toISOString();
+  public scoreArray: Array<number> = new Array<number>();
+  public labelArray: Array<string> = new Array<string>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) { }
 
@@ -41,34 +43,27 @@ export class PlatformDetailsPage {
     this.statsProvider.getDailyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
       if(data) {
         this.prognostics = data;
-        this.createCanvas(this.prognostics);
+        for(let prognostic of this.prognostics) {
+          this.scoreArray.push(parseInt(prognostic.score));
+          this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
+        }
+        this.createCanvas(this.scoreArray, this.labelArray);
       }
     }, error => {
       console.log('Data gave error, not building canvas: ' + error);
     });
   }
 
-  
 
-  private createCanvas(prognostics: any) {
-    if(prognostics) {
-      let scoreArray: Array<number> = new Array<number>();
-      let labelArray: Array<string> = new Array<string>();
 
-      for(let prognostic of prognostics) {
-        console.log(prognostic);
-        scoreArray.push(parseInt(prognostic.score));
-        labelArray.push(prognostic.date.toString());
-      }
+  private createCanvas(scoreArray, labelArray) {
+    if(scoreArray && labelArray && scoreArray.length > 0 && labelArray.length > 0) {
 
-      console.log(scoreArray);
-      console.log(labelArray);
-      
       this.lineCanvas  = new Chart(this.lineCanvas.nativeElement, {
           type: 'line',
-          data: {labels: [labelArray],
+          data: {labels: this.labelArray,
                 datasets: [{
-                  data: scoreArray,
+                  data: this.scoreArray,
                   label: "Score"
                 }]
             }

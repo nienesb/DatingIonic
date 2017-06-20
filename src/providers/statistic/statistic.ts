@@ -44,7 +44,7 @@ export class StatisticProvider {
 
   getDailyPrognosticForPlatform(platform: number, start: string, end: string) {
     this.setHeaders();
-    return this.http.get(this.baseUrl + "/stats/dailyprognostic?platformId="+platform+"&start="+start+"&end="+end, {headers: this.headers})
+    return this.http.get(this.baseUrl + "/stats/dailyprognostic?limit=24&platformId="+platform+"&start="+start+"&end="+end, {headers: this.headers})
       .map((res: Response) => {
         return res.json();
       })
