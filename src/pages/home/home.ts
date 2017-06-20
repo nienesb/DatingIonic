@@ -21,7 +21,6 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController, private http: Http, private statsProvider: StatisticProvider, private platformsProvider: PlatformProvider) {
-    this.showPage = "dailyPrognostic";
   }
 
   getPlatforms() {
