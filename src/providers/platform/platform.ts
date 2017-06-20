@@ -15,6 +15,7 @@ export class PlatformProvider {
 
   setHeaders() {
     this.apiToken = this.authService.getToken();
+    this.headers = new Headers();
     this.headers.append("Authorization", "token "+this.apiToken);
   }
   getPlatforms() {

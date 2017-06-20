@@ -33,7 +33,7 @@ export class DailyStatPage {
         labels: ["Score", "Target", "proceeds Target", "proceeds Prognostic"],
         datasets: [{
           label: this.dailyStat.platform.name,
-          data: [this.dailyStat.score, 100, this.dailyStat.proceedsTarget, this.dailyStat.proceedsPrognostic],
+          data: [this.dailyStat.score, this.dailyStat.proceedsTarget, this.dailyStat.proceedsPrognostic],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
