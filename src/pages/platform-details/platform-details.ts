@@ -16,14 +16,22 @@ import 'moment/locale/nl';
   templateUrl: 'platform-details.html',
 })
 export class PlatformDetailsPage {
-  public selectedDate = new Date().toISOString();
+  public selectedDate: any = moment().toISOString();
+  public endDate: any = moment(this.selectedDate).add(1, 'days').toISOString();
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
+  updateDate() {
+    this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
+    console.log('~~~~Updated endDate~~~~');
+    console.log('endDate: ' + this.endDate);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad PlatformDetailsPage');
-    console.log('Date: ' + this.selectedDate);
+    console.log('selectedDate: ' + this.selectedDate);
+    console.log('endDate: ' + this.endDate);
   }
 
 }
