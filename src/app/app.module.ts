@@ -6,7 +6,8 @@ import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
-import { DailyStatPage } from "../pages/daily-stat/daily-stat";
+import { DailyStatPage } from '../pages/daily-stat/daily-stat';
+import { PlatformDetailsPage } from '../pages/platform-details/platform-details';
 import { NotitiesPage } from "../pages/notities-pages/notities/notities";
 import { AddNotePage } from "../pages/notities-pages/add-note/add-note";
 
@@ -39,7 +40,8 @@ export const firebaseConfig = {
     LoginPage,
     DailyStatPage,
     NotitiesPage,
-    AddNotePage
+    AddNotePage,
+    PlatformDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,8 @@ export const firebaseConfig = {
     LoginPage,
     DailyStatPage,
     NotitiesPage,
-    AddNotePage
+    AddNotePage,
+    PlatformDetailsPage
   ],
   providers: [
     StatusBar,
