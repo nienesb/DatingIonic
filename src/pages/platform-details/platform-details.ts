@@ -21,19 +21,30 @@ export class PlatformDetailsPage {
   public platform = this.navParams.get("platform");
   public selectedDate: any = moment().toISOString();
   public endDate: any = moment(this.selectedDate).add(1, 'days').toISOString();
-  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) {
-  }
+  public convertedSelectedDate: string;
+  public convertedEndDate: string;
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) { }
 
   updateDate() {
     this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
-    this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
+
+    this.convertedSelectedDate = this.convertDate(this.selectedDate);
+    this.convertedEndDate = this.convertDate(this.endDate);
+
+    this.getPrognostics(this.platform.id, this.convertedSelectedDate, this.convertedEndDate);
   }
 
   ionViewDidLoad()
   {
     console.log('ionViewDidLoad PlatformDetailsPage');
     console.log('Date: ' + this.selectedDate);
-    this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
+    console.log('convertedDate: ' + this.convertDate(this.selectedDate));
+
+    this.convertedSelectedDate = this.convertDate(this.selectedDate);
+    this.convertedEndDate = this.convertDate(this.endDate);
+
+    this.getPrognostics(this.platform.id, this.convertedSelectedDate, this.convertedEndDate);
 
   }
 
@@ -42,6 +53,17 @@ export class PlatformDetailsPage {
       this.prognostics = data;
       console.log(data)
     });
+  }
+  
+  private convertDate(date: any) {
+    if(date) {
+      let tempDate = date.toString();
+      tempDate = tempDate.replace(/T/g, '%20');
+      tempDate = tempDate.replace(/:/g, '%3A');
+      tempDate = tempDate.substr(0, 25);
+
+      return tempDate;
+    }
   }
 
 
