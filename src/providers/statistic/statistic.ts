@@ -14,6 +14,7 @@ export class StatisticProvider {
 
   setHeaders() {
     this.apiToken = this.authService.getToken();
+    this.headers = new Headers();
     this.headers.append("Authorization", "token "+this.apiToken);
   }
   getDailyTargets() {
