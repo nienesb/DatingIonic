@@ -46,7 +46,6 @@ export class PlatformDetailsPage {
         this.prognostics = data;
         this.scoreArray = [];
         this.labelArray = [];
-        
         for(let prognostic of this.prognostics) {
           this.scoreArray.push(parseInt(prognostic.score));
           this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
