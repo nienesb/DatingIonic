@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as moment from 'moment';
 import 'moment/locale/nl';
 import {StatisticProvider} from "../../providers/statistic/statistic";
+import { Chart } from 'chart.js';
 
 
 /**
@@ -17,6 +18,7 @@ import {StatisticProvider} from "../../providers/statistic/statistic";
   templateUrl: 'platform-details.html',
 })
 export class PlatformDetailsPage {
+  @ViewChild('lineCanvas') lineCanvas;
   public prognostics;
   public platform = this.navParams.get("platform");
   public selectedDate: any = moment().toISOString();
@@ -37,9 +39,40 @@ export class PlatformDetailsPage {
 
   getPrognostics(platformId, start, end) {
     this.statsProvider.getDailyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
-      this.prognostics = data;
-      console.log(data);
+      if(data) {
+        this.prognostics = data;
+        this.createCanvas(this.prognostics);
+      }
+    }, error => {
+      console.log('Data gave error, not building canvas: ' + error);
     });
   }
 
+  
+
+  private createCanvas(prognostics: any) {
+    if(prognostics) {
+      let scoreArray: Array<number> = new Array<number>();
+      let labelArray: Array<string> = new Array<string>();
+
+      for(let prognostic of prognostics) {
+        console.log(prognostic);
+        scoreArray.push(parseInt(prognostic.score));
+        labelArray.push(prognostic.date.toString());
+      }
+
+      console.log(scoreArray);
+      console.log(labelArray);
+      
+      this.lineCanvas  = new Chart(this.lineCanvas.nativeElement, {
+          type: 'line',
+          data: {labels: [labelArray],
+                datasets: [{
+                  data: scoreArray,
+                  label: "Score"
+                }]
+            }
+      });
+    }
+  }
 }
