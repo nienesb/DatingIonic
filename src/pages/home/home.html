@@ -6,57 +6,17 @@
 
 <ion-content padding>
 
-  <div>
-    <h4>Weergave: </h4>
-    <ion-select [(ngModel)]="showPage">
-      <ion-option value="dailyPrognostic">Daily Prognostic</ion-option>
-      <ion-option value="monthlyPrognostic">Monthly Prognostic</ion-option>
-      <ion-option value="platforms">Platforms</ion-option>
-      <ion-option value="managers">Green8Group managers</ion-option>
-      <ion-option value="partners">Green8Group partners</ion-option>
-    </ion-select>
-  </div>
 
-  <ion-list *ngIf="showPage == 'dailyPrognostic'">
-    <ion-item-sliding *ngFor="let stat of dailyPrognostic">
-      <ion-item (click)="openDetailPage(stat)">
-        <h2>{{stat.platform.hostname}}</h2>
-        <h4>Profit Percentage: {{stat.profitPercentage}}%</h4>
-      </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="primary">
-          <ion-icon name="ion-document" class="ion-document" (click)="openNotes(stat)"></ion-icon>
-          Notities
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
 
-  <ion-list *ngIf="showPage == 'platforms'">
+  <ion-list>
     <ion-item-sliding *ngFor="let platform of platforms">
-      <ion-item (click)="openPlatformPage(platform)">
+      <ion-item (click)="openDetailPage(platform)">
         <h2>{{platform.hostname}}</h2>
         <h4>{{platform.name}}</h4>
       </ion-item>
     </ion-item-sliding>
   </ion-list>
 
-  <ion-list *ngIf="showPage == 'managers'">
-    <ion-item-sliding *ngFor="let manager of managers">
-      <ion-item>
-        <h2>{{manager.name}}</h2>
-        <h4>{{manager.created}}</h4>
-      </ion-item>
-    </ion-item-sliding>
-  </ion-list>
 
-  <ion-list *ngIf="showPage == 'partners'">
-    <ion-item-sliding *ngFor="let partner of partners">
-      <ion-item>
-        <h2>{{partner.name}}</h2>
-        <h4>{{partner.companyName}}</h4>
-      </ion-item>
-    </ion-item-sliding>
-  </ion-list>
 </ion-content>
 

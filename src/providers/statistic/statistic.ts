@@ -26,7 +26,7 @@ export class StatisticProvider {
 
   getDailyPrognostics() {
     this.setHeaders();
-    return this.http.get(this.baseUrl + "/stats/dailyprognostic?year=2017&month=4", {headers: this.headers})
+    return this.http.get(this.baseUrl + "/stats/dailyprognostic?start=2017-05-01%2000%3A00%3A00&end=2017-05-31%2000%3A00%3A00", {headers: this.headers})
       .map((res: Response) => {
         return res.json();
       })

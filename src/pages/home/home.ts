@@ -17,44 +17,17 @@ import {AddNotePage} from "../notities-pages/add-note/add-note";
 })
 
 export class HomePage {
-  dailyPrognostic;
-  monthlyPrognostic;
   platforms;
-  showPage;
 
 
   constructor(public navCtrl: NavController, private http: Http, private statsProvider: StatisticProvider, private platformsProvider: PlatformProvider) {
     this.showPage = "dailyPrognostic";
   }
 
-  getDailyTargets() {
-    this.statsProvider.getDailyPrognostics().subscribe(stats => {
-      this.dailyPrognostic = stats;
-      this.addPlatformsToStats();
-    })
-  }
-
-  getMonthlyPrognostic() {
-    this.statsProvider.getMonthlyPrognostic().subscribe(stats => {
-      this.monthlyPrognostic = stats;
-    })
-  }
-
-  private addPlatformsToStats() {
-    for (let dailyTarget of this.dailyPrognostic) {
-      for (let platform of this.platforms) {
-        if (dailyTarget.platformId == platform.id) {
-          dailyTarget.platform = platform;
-        }
-      }
-    }
-  }
-
   getPlatforms() {
     this.platformsProvider.getPlatforms().subscribe(platforms => {
       this.platforms = platforms;
     });
-    console.log(this.platforms);
   }
 
   openDetailPage(dailyStat) {
@@ -67,8 +40,6 @@ export class HomePage {
 
   ngOnInit(): void {
     this.getPlatforms();
-    this.getDailyTargets();
-    this.getMonthlyPrognostic();
   }
 
 }
