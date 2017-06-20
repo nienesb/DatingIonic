@@ -25,12 +25,13 @@ export class PlatformDetailsPage {
   public endDate: any = moment(this.selectedDate).add(1, 'days').toISOString();
   public scoreArray: Array<number> = new Array<number>();
   public labelArray: Array<string> = new Array<string>();
+  public dayOrMonth = 'day';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) { }
 
   updateDate() {
     this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
-
+    console.log(this.selectedDate);
     this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
   }
 
@@ -43,6 +44,9 @@ export class PlatformDetailsPage {
     this.statsProvider.getDailyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
       if(data) {
         this.prognostics = data;
+        this.scoreArray = [];
+        this.labelArray = [];
+        
         for(let prognostic of this.prognostics) {
           this.scoreArray.push(parseInt(prognostic.score));
           this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");

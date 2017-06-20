@@ -13,8 +13,19 @@
 
 <ion-content padding>
   <ion-item>
+    <ion-label>Dag of Maand</ion-label>
+    <ion-select [(ngModel)]="dayOrMonth">
+      <ion-option value="day">Dag</ion-option>
+      <ion-option value="month">Maand</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item *ngIf="dayOrMonth && dayOrMonth === 'day'">
     <ion-label>Datum</ion-label>
     <ion-datetime displayFormat="DD-MM-YYYY" [(ngModel)]="selectedDate" (ionChange)="updateDate()"></ion-datetime>
+  </ion-item>
+  <ion-item *ngIf="dayOrMonth && dayOrMonth === 'month'">
+    <ion-label>Maand</ion-label>
+    <ion-datetime displayFormat="MMMM" pickerFormat="MMMM" [(ngModel)]="selectedDate" (ionChange)="updateDate()"></ion-datetime>
   </ion-item>
 
   <hr>
@@ -38,6 +49,7 @@
         Statistics
       </ion-card-header>
       <ion-card-content>
+        {{prognostic.date}}
         {{prognostic.score}}
       </ion-card-content>
 
