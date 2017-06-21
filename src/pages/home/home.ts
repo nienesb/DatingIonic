@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { AlertController, NavController, Loading, LoadingController } from 'ionic-angular';
 import {Http} from "@angular/http";
 import {StatisticProvider} from "../../providers/statistic/statistic";
 import {PlatformProvider} from "../../providers/platform/platform";
 import {DailyStatPage} from "../daily-stat/daily-stat";
 import {AddNotePage} from "../notities-pages/add-note/add-note";
+import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
 
 @Component({
   selector: 'page-home',
@@ -22,8 +23,13 @@ export class HomePage {
   platforms;
   showPage;
 
+  loading: Loading;
+  notes: FirebaseListObservable<any>;
+  noteTitle: string;
+  noteNote: string;
 
-  constructor(public navCtrl: NavController, private http: Http, private statsProvider: StatisticProvider, private platformsProvider: PlatformProvider) {
+  constructor(public navCtrl: NavController, private http: Http, private statsProvider: StatisticProvider, private alertCtrl: AlertController,
+              private platformsProvider: PlatformProvider, private loadingCtrl: LoadingController) {
     this.showPage = "dailyPrognostic";
   }
 
@@ -62,7 +68,7 @@ export class HomePage {
   }
 
   openNotes(dailyStat) {
-    this.navCtrl.setRoot(AddNotePage);
+    this.navCtrl.push(AddNotePage, {dailyStat: dailyStat});
   }
 
   ngOnInit(): void {
