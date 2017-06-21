@@ -1,9 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import * as moment from 'moment';
 import 'moment/locale/nl';
 import {StatisticProvider} from "../../providers/statistic/statistic";
-import { Chart } from 'chart.js';
+import {Chart} from 'chart.js';
 
 
 /**
@@ -27,7 +27,8 @@ export class PlatformDetailsPage {
   public labelArray: Array<string> = new Array<string>();
   public dayOrMonth = 'day';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) { }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) {
+  }
 
   updateDate() {
     this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
@@ -35,42 +36,48 @@ export class PlatformDetailsPage {
     this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
   }
 
-  ionViewDidLoad()
-  {
+  ionViewDidLoad() {
+    this.createCanvas(this.scoreArray, this.labelArray);
     this.getPrognostics(this.platform.id, this.selectedDate, this.endDate)
   }
 
   getPrognostics(platformId, start, end) {
     this.statsProvider.getDailyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
-      if(data) {
+      if (data) {
         this.prognostics = data;
         this.scoreArray = [];
         this.labelArray = [];
-        for(let prognostic of this.prognostics) {
+        for (let prognostic of this.prognostics) {
           this.scoreArray.push(parseInt(prognostic.score));
           this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
         }
-        this.createCanvas(this.scoreArray, this.labelArray);
+        this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+
       }
     }, error => {
       console.log('Data gave error, not building canvas: ' + error);
     });
   }
 
-
+  private addData(chart, label, data) {
+    chart.data.labels = label;
+    chart.data.datasets[0].data = data;
+    chart.update();
+  }
 
   private createCanvas(scoreArray, labelArray) {
-    if(scoreArray && labelArray && scoreArray.length > 0 && labelArray.length > 0) {
 
-      this.lineCanvas  = new Chart(this.lineCanvas.nativeElement, {
-          type: 'line',
-          data: {labels: this.labelArray,
-                datasets: [{
-                  data: this.scoreArray,
-                  label: "Score"
-                }]
-            }
-      });
-    }
+    this.lineCanvas = new Chart(this.lineCanvas.nativeElement, {
+      type: 'line',
+      data: {
+        labels: this.labelArray,
+        datasets: [{
+          data: this.scoreArray,
+          label: "Score"
+        }]
+      }
+    });
   }
+
+
 }
