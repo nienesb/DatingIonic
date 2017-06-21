@@ -1,0 +1,46 @@
+<!--
+  Generated template for the PlatformDetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title> {{platform.name ? platform.name : 'PlatformDetails'}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label>Dag of Maand</ion-label>
+    <ion-select [(ngModel)]="dayOrMonth">
+      <ion-option value="day">Dag</ion-option>
+      <ion-option value="month">Maand</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item *ngIf="dayOrMonth && dayOrMonth === 'day'">
+    <ion-label>Datum</ion-label>
+    <ion-datetime displayFormat="DD-MM-YYYY" [(ngModel)]="selectedDate" (ionChange)="updateDate()"></ion-datetime>
+  </ion-item>
+  <ion-item *ngIf="dayOrMonth && dayOrMonth === 'month'">
+    <ion-label>Maand</ion-label>
+    <ion-datetime displayFormat="MMMM YYYY" pickerFormat="MMMM YYYY" [(ngModel)]="selectedDate" (ionChange)="updateDate()"></ion-datetime>
+  </ion-item>
+
+  <hr>
+  <ion-card>
+    <ion-card-header>
+      Name
+    </ion-card-header>
+
+    <ion-card-content>
+      {{platform.name}}<br>
+      {{platform.hostname}}
+    </ion-card-content>
+
+  </ion-card>
+  <hr>
+  <canvas [hidden]="!prognostics || prognostics.length < 1" #lineCanvas></canvas>
+</ion-content>
+
+
