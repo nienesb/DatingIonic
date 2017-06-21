@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Notities</ion-title>
+    <ion-title>Notes</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -10,7 +10,7 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let note of notes | async">
-      <ion-item>
+      <ion-item (click)="openDetailNote(note)">
         <h3>{{note.title}}</h3>
         <p>{{note.note}}</p>
       </ion-item>

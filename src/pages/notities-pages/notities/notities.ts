@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { AddNotePage } from "../add-note/add-note";
+import {DetailNotePage} from "../detail-note/detail-note";
 
 @IonicPage()
 @Component({
@@ -28,6 +29,10 @@ export class NotitiesPage {
 
   private deleteNote (note) {
     this.notes.remove(note);
+  }
+
+  private openDetailNote (note) {
+    this.nav.push(DetailNotePage, {note: note});
   }
 
 }

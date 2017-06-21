@@ -22,6 +22,7 @@ import { PlatformProvider } from '../providers/platform/platform';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from "angularfire2/database";
 import { AngularFireAuthModule } from "angularfire2/auth";
+import {DetailNotePage} from "../pages/notities-pages/detail-note/detail-note";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -41,6 +42,7 @@ export const firebaseConfig = {
     DailyStatPage,
     NotitiesPage,
     AddNotePage,
+    DetailNotePage,
     PlatformDetailsPage
   ],
   imports: [
@@ -59,6 +61,7 @@ export const firebaseConfig = {
     DailyStatPage,
     NotitiesPage,
     AddNotePage,
+    DetailNotePage,
     PlatformDetailsPage
   ],
   providers: [

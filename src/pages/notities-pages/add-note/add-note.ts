@@ -31,15 +31,17 @@ export class AddNotePage {
 
   private addNote(title, note) {
     this.showLoading();
+    if (this.dailyStat) {
     this.notes.push({
       title: this.noteTitle,
       note: this.noteNote,
       stat: this.dailyStat
-    });
+    })} else {
+      this.notes.push({
+      title: this.noteTitle,
+      note: this.noteNote,
+    })};
     this.navCtrl.setRoot(NotitiesPage);
-    error => {
-      this.showError("De notitie is niet toegevoegd, probeer het nog eens")
-    }
   }
 
   private cancel () {
