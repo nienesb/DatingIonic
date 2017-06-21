@@ -50,4 +50,12 @@ export class StatisticProvider {
       })
   }
 
+  getMonthlyPrognosticForPlatform(platform: number, start: string, end: string) {
+    this.setHeaders();
+    return this.http.get(this.baseUrl + "/stats/monthly-prognostic/platforms?limit=31&platformId="+platform+"&start="+start+"&end="+end, {headers: this.headers})
+      .map((res: Response) => {
+        return res.json();
+      })
+  }
+
 }

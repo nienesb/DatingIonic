@@ -30,7 +30,13 @@ export class PlatformDetailsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) { }
 
   updateDate() {
-    this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
+    if(this.dayOrMonth == 'day') {
+      this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
+    }
+    else {
+        this.selectedDate = moment(this.selectedDate).startOf('month').toISOString();
+        this.endDate = moment(this.selectedDate).add(1, 'month').toISOString();
+    }
     console.log(this.selectedDate);
     this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
 
@@ -42,21 +48,40 @@ export class PlatformDetailsPage {
   }
 
   getPrognostics(platformId, start, end) {
-    this.statsProvider.getDailyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
-      if(data) {
-        this.prognostics = data;
-        this.scoreArray = [];
-        this.labelArray = [];
-        for (let prognostic of this.prognostics) {
-          this.scoreArray.push(parseInt(prognostic.score));
-          this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
-        }
-        this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+    if(this.dayOrMonth == 'day') {
+      this.statsProvider.getDailyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
+        if(data) {
+          this.prognostics = data;
+          this.scoreArray = [];
+          this.labelArray = [];
+          for (let prognostic of this.prognostics) {
+            this.scoreArray.push(parseInt(prognostic.score));
+            this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
+          }
+          this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
 
-      }
-    }, error => {
-      console.log('Data gave error, not building canvas: ' + error);
-    });
+        }
+      }, error => {
+        console.log('Data gave error, not building canvas: ' + error);
+      });
+    }
+    else {
+      this.statsProvider.getMonthlyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
+        if(data) {
+          this.prognostics = data;
+          this.scoreArray = [];
+          this.labelArray = [];
+          for (let prognostic of this.prognostics) {
+            this.scoreArray.push(parseInt(prognostic.averageProceedsDailyPercentage));
+            this.labelArray.push(moment(prognostic.date).format('MMM Do'));
+          }
+          this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+
+        }
+      }, error => {
+        console.log('Data gave error, not building canvas: ' + error);
+      });
+    }
   }
 
   private addData(chart, label, data) {
