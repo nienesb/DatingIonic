@@ -27,13 +27,13 @@ export class PlatformDetailsPage {
   public labelArray: Array<string> = new Array<string>();
   public dayOrMonth = 'day';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) { }
 
   updateDate() {
     this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
     console.log(this.selectedDate);
     this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
+
   }
 
   ionViewDidLoad() {
@@ -43,7 +43,7 @@ export class PlatformDetailsPage {
 
   getPrognostics(platformId, start, end) {
     this.statsProvider.getDailyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
-      if (data) {
+      if(data) {
         this.prognostics = data;
         this.scoreArray = [];
         this.labelArray = [];
