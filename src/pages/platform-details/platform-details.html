@@ -6,10 +6,9 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>platformDetails</ion-title>
+    <ion-title> {{platform.name ? platform.name : 'PlatformDetails'}}</ion-title>
   </ion-navbar>
 </ion-header>
-
 
 <ion-content padding>
   <ion-item>
@@ -41,21 +40,7 @@
 
   </ion-card>
   <hr>
-  <div *ngFor="let prognostic of prognostics">
-
-    <ion-card>
-
-      <ion-card-header>
-        Statistics
-      </ion-card-header>
-      <ion-card-content>
-        {{prognostic.date}}
-        {{prognostic.score}}
-      </ion-card-content>
-
-    </ion-card>
-  </div>
-  <canvas #lineCanvas></canvas>
+  <canvas [hidden]="!prognostics || prognostics.length < 1" #lineCanvas></canvas>
 </ion-content>
 
 

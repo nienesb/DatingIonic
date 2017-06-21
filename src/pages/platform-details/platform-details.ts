@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import * as moment from 'moment';
 import 'moment/locale/nl';
 import {StatisticProvider} from "../../providers/statistic/statistic";
@@ -27,7 +27,7 @@ export class PlatformDetailsPage {
   public labelArray: Array<string> = new Array<string>();
   public dayOrMonth = 'day';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider) { }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider, public toastCtrl: ToastController) { }
 
   updateDate() {
     if(this.dayOrMonth == 'day') {
@@ -54,15 +54,20 @@ export class PlatformDetailsPage {
           this.prognostics = data;
           this.scoreArray = [];
           this.labelArray = [];
-          for (let prognostic of this.prognostics) {
-            this.scoreArray.push(parseInt(prognostic.score));
-            this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
+          
+          if(data.length > 0) {
+            for (let prognostic of this.prognostics) {
+              this.scoreArray.push(parseInt(prognostic.score));
+              this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
+            }
+            this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+          } else {
+            this.showToast('Geen data gevonden');
           }
-          this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
-
         }
       }, error => {
         console.log('Data gave error, not building canvas: ' + error);
+        this.showToast('Er is iets fout gegaan bij het ophalen van data.');
       });
     }
     else {
@@ -71,15 +76,21 @@ export class PlatformDetailsPage {
           this.prognostics = data;
           this.scoreArray = [];
           this.labelArray = [];
-          for (let prognostic of this.prognostics) {
-            this.scoreArray.push(parseInt(prognostic.averageProceedsDailyPercentage));
-            this.labelArray.push(moment(prognostic.date).format('MMM Do'));
+
+          if(data.length > 0) {
+            for (let prognostic of this.prognostics) {
+              this.scoreArray.push(parseInt(prognostic.averageProceedsDailyPercentage));
+              this.labelArray.push(moment(prognostic.date).format('MMM Do'));
+            }
+            this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+          } else {
+            this.showToast('Geen data gevonden');
           }
-          this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
 
         }
       }, error => {
         console.log('Data gave error, not building canvas: ' + error);
+        this.showToast('Er is iets fout gegaan bij het ophalen van data.');
       });
     }
   }
@@ -104,5 +115,12 @@ export class PlatformDetailsPage {
     });
   }
 
-
+  private showToast(messageString: string) {
+    let toast = this.toastCtrl.create({
+      message: messageString,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
 }
