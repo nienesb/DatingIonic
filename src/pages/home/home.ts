@@ -17,8 +17,8 @@ import {AddNotePage} from "../notities-pages/add-note/add-note";
 })
 
 export class HomePage {
-  platforms;
 
+  platforms;
 
   constructor(public navCtrl: NavController, private http: Http, private statsProvider: StatisticProvider, private platformsProvider: PlatformProvider) {
   }
@@ -31,10 +31,6 @@ export class HomePage {
 
   openDetailPage(platform) {
     this.navCtrl.push(PlatformDetailsPage, {platform: platform});
-  }
-
-  openNotes(dailyStat) {
-    this.navCtrl.setRoot(AddNotePage);
   }
 
   ngAfterViewInit() {

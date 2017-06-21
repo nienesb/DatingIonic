@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import 'moment/locale/nl';
 import {StatisticProvider} from "../../providers/statistic/statistic";
 import {Chart} from 'chart.js';
+import {AddNotePage} from "../notities-pages/add-note/add-note";
 
 
 /**
@@ -120,5 +121,9 @@ export class PlatformDetailsPage {
       position: 'top'
     });
     toast.present();
+  }
+
+  openNotes(platform) {
+    this.navCtrl.push(AddNotePage, {platform: platform});
   }
 }

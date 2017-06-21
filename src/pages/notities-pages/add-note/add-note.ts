@@ -17,7 +17,7 @@ export class AddNotePage {
   noteTitle: string;
   noteNote: string;
   loading: Loading;
-  dailyStat;
+  platform;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFireDatabase,
               private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
@@ -25,21 +25,21 @@ export class AddNotePage {
   }
 
   ngOnInit(): void {
-    this.dailyStat = this.navParams.get("dailyStat");
-    console.log(this.dailyStat);
+    this.platform = this.navParams.get("platform");
+    console.log(this.platform);
   }
 
   private addNote(title, note) {
     this.showLoading();
-    if (this.dailyStat) {
+    if (this.platform) {
     this.notes.push({
       title: this.noteTitle,
       note: this.noteNote,
-      stat: this.dailyStat
+      stat: this.platform
     })} else {
       this.notes.push({
       title: this.noteTitle,
-      note: this.noteNote,
+      note: this.noteNote
     })};
     this.navCtrl.setRoot(NotitiesPage);
   }

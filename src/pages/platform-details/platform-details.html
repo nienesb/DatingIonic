@@ -7,6 +7,11 @@
 <ion-header>
   <ion-navbar>
     <ion-title> {{platform.name ? platform.name : 'PlatformDetails'}}</ion-title>
+    <ion-buttons end>
+    <button ion-button (click)="openNotes(platform)">
+    <ion-icon side="right" name="paper"></ion-icon>
+    </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

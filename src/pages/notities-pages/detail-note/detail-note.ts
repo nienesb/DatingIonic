@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {DailyStatPage} from "../../daily-stat/daily-stat";
+import {PlatformDetailsPage} from "../../platform-details/platform-details";
 
 /**
  * Generated class for the DetailNotePage page.
@@ -31,8 +32,8 @@ export class DetailNotePage {
 
   private openStat (note) {
     console.log(note);
-    if(note.stat && note.stat.platform) {
-      this.navCtrl.push(DailyStatPage, {dailyStat: note.stat});
+    if(note.stat) {
+      this.navCtrl.push(PlatformDetailsPage, {platform: note.stat});
     }
   }
 }
