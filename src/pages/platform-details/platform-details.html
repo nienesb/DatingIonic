@@ -24,7 +24,7 @@
   </ion-item>
   <ion-item *ngIf="dayOrMonth && dayOrMonth === 'month'">
     <ion-label>Maand</ion-label>
-    <ion-datetime displayFormat="MMMM" pickerFormat="MMMM" [(ngModel)]="selectedDate" (ionChange)="updateDate()"></ion-datetime>
+    <ion-datetime displayFormat="MMMM YYYY" pickerFormat="MMMM YYYY" [(ngModel)]="selectedDate" (ionChange)="updateDate()"></ion-datetime>
   </ion-item>
 
   <hr>

@@ -34,7 +34,7 @@ export class PlatformDetailsPage {
       this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
     }
     else {
-        this.selectedDate = moment(this.selectedDate).startOf('month').toISOString();
+        //this.selectedDate = moment(this.selectedDate).startOf('month').toISOString();
         this.endDate = moment(this.selectedDate).add(1, 'month').toISOString();
     }
     console.log(this.selectedDate);
@@ -54,7 +54,7 @@ export class PlatformDetailsPage {
           this.prognostics = data;
           this.scoreArray = [];
           this.labelArray = [];
-          
+
           if(data.length > 0) {
             for (let prognostic of this.prognostics) {
               this.scoreArray.push(parseInt(prognostic.score));
@@ -66,7 +66,6 @@ export class PlatformDetailsPage {
           }
         }
       }, error => {
-        console.log('Data gave error, not building canvas: ' + error);
         this.showToast('Er is iets fout gegaan bij het ophalen van data.');
       });
     }
@@ -89,7 +88,6 @@ export class PlatformDetailsPage {
 
         }
       }, error => {
-        console.log('Data gave error, not building canvas: ' + error);
         this.showToast('Er is iets fout gegaan bij het ophalen van data.');
       });
     }
