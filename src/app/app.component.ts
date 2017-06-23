@@ -7,8 +7,7 @@ import { LoginPage } from '../pages/login/login';
 import { NotitiesPage } from "../pages/notities-pages/notities/notities";
 
 @Component({
-  templateUrl: 'app.html',
-  styleUrls: ['app.scss']
+  templateUrl: 'app.html'
 })
 export class MyApp {
 

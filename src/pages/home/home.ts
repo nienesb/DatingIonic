@@ -7,8 +7,7 @@ import { PlatformDetailsPage } from "../platform-details/platform-details";
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
-  styleUrls: ['home.scss']
+  templateUrl: 'home.html'
 })
 
 export class HomePage {
