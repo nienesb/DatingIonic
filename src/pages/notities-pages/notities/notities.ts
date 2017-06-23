@@ -23,15 +23,15 @@ export class NotitiesPage {
     console.log('ionViewDidLoad NotitiesPage');
   }
 
-  private openAddnote () {
+  public openAddnote () {
     this.nav.setRoot(AddNotePage);
   }
 
-  private deleteNote (note) {
+  public deleteNote (note) {
     this.notes.remove(note);
   }
 
-  private openDetailNote (note) {
+  public openDetailNote (note) {
     this.nav.push(DetailNotePage, {note: note});
   }
 

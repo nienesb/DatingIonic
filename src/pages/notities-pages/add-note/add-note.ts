@@ -2,9 +2,6 @@ import {Component} from '@angular/core';
 import {AlertController, IonicPage, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
 import {NotitiesPage} from "../notities/notities";
-import { HomePage } from "../../home/home";
-import {DailyStatPage} from "../../daily-stat/daily-stat"
-import { PlatformProvider } from "../../../providers/platform/platform"
 
 @IonicPage()
 @Component({
@@ -29,7 +26,7 @@ export class AddNotePage {
     console.log(this.platform);
   }
 
-  private addNote(title, note) {
+  public addNote(title, note) {
     this.showLoading();
     if (this.platform) {
     this.notes.push({
@@ -44,7 +41,7 @@ export class AddNotePage {
     this.navCtrl.setRoot(NotitiesPage);
   }
 
-  private cancel () {
+  public cancel () {
     this.navCtrl.setRoot(NotitiesPage);
   }
 

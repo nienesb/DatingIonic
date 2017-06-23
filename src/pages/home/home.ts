@@ -2,18 +2,13 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {Http} from "@angular/http";
 import {StatisticProvider} from "../../providers/statistic/statistic";
-import {PlatformProvider} from "../../providers/platform/platform";
+import { PlatformProvider} from "../../providers/platform/platform";
 import { PlatformDetailsPage } from "../platform-details/platform-details";
-import {AddNotePage} from "../notities-pages/add-note/add-note";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  styles: [`
-    h2{
-      font-weight: bold;
-    }
-  `]
+  styleUrls: ['home.scss']
 })
 
 export class HomePage {
