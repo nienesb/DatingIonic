@@ -5,6 +5,7 @@ import {NotitiesPage} from "../notities/notities";
 import { HomePage } from "../../home/home";
 import {DailyStatPage} from "../../daily-stat/daily-stat"
 import { PlatformProvider } from "../../../providers/platform/platform"
+import {PlatformDetailsPage} from "../../platform-details/platform-details";
 
 @IonicPage()
 @Component({
@@ -44,8 +45,11 @@ export class AddNotePage {
     this.navCtrl.setRoot(NotitiesPage);
   }
 
-  private cancel () {
-    this.navCtrl.setRoot(NotitiesPage);
+  private cancel (platform) {
+    if (this.platform) {
+      this.navCtrl.setRoot(PlatformDetailsPage, {platform: platform});
+    } else {
+      this.navCtrl.setRoot(NotitiesPage)};
   }
 
   showLoading() {
