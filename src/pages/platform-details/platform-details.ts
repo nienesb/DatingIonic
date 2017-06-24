@@ -189,31 +189,49 @@ export class PlatformDetailsPage {
   }
 
   private createBarGraphForDay(prognostics) {
-    let highestProfitPercentage = null;
-    let lowestProfitPercentage = null;
-    let highestScore = null;
-    let lowestScore = null;
+    let highestProfitPercentage = [];
+    let lowestProfitPercentage = [];
+    let highestScore = [];
+    let lowestScore = [];
+
+    highestProfitPercentage[0] = null;
+    lowestProfitPercentage[0] = null;
+    highestScore[0] = null;
+    lowestScore[0] = null;
+
+    highestProfitPercentage[1] = '';
+    lowestProfitPercentage[1] = '';
+    highestScore[1] = '';
+    lowestScore[1] = '';
 
     for (let prognostic of prognostics) {
-      if (parseInt(prognostic.profitPercentage) < lowestProfitPercentage || lowestProfitPercentage == null) {
-        lowestProfitPercentage = parseInt(prognostic.profitPercentage);
+      if (parseInt(prognostic.profitPercentage) < lowestProfitPercentage[0] || lowestProfitPercentage[0] == null) {
+        lowestProfitPercentage[0] = parseInt(prognostic.profitPercentage);
+        lowestProfitPercentage[1] = prognostic.date.toString().substr(11, 2) + "U";
       }
-      if (parseInt(prognostic.profitPercentage) > highestProfitPercentage || highestProfitPercentage == null) {
-        highestProfitPercentage = parseInt(prognostic.profitPercentage);
+      if (parseInt(prognostic.profitPercentage) > highestProfitPercentage[0] || highestProfitPercentage[0] == null) {
+        highestProfitPercentage[0] = parseInt(prognostic.profitPercentage);
+        highestProfitPercentage[1] = prognostic.date.toString().substr(11, 2) + "U";
       }
-      if (parseInt(prognostic.score) < lowestScore || lowestScore == null) {
-        lowestScore = parseInt(prognostic.score);
+      if (parseInt(prognostic.score) < lowestScore[0] || lowestScore[0] == null) {
+        lowestScore[0] = parseInt(prognostic.score);
+        lowestScore[1] = prognostic.date.toString().substr(11, 2) + "U";
       }
-      if (parseInt(prognostic.score) > highestScore || highestScore == null) {
-        highestScore = parseInt(prognostic.score);
+      if (parseInt(prognostic.score) > highestScore[0] || highestScore[0] == null) {
+        highestScore[0] = parseInt(prognostic.score);
+        highestScore[1] = prognostic.date.toString().substr(11, 2) + "U";
       }
     }
+    console.log(highestScore[0]);
     this.statsArray = [];
-    this.statsArray.push(lowestProfitPercentage);
-    this.statsArray.push(highestProfitPercentage);
-    this.statsArray.push(lowestScore);
-    this.statsArray.push(highestScore);
-    this.barLabelArray = ['L. Profit', 'H. Profit', 'L. Score', 'H. Score'];
+    this.statsArray.push(lowestProfitPercentage[0]);
+    this.statsArray.push(highestProfitPercentage[0]);
+    this.statsArray.push(lowestScore[0]);
+    this.statsArray.push(highestScore[0]);
+    this.barLabelArray = ['L. Profit',
+      'H. Profit',
+      'L. Score',
+      'H. Score'];
     this.addData(this.barCanvas, this.barLabelArray, this.statsArray);
   }
 }
