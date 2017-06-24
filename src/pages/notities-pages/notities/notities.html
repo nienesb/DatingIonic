@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list *ngIf="notes && notes.length > 0">
+  <ion-list>
     <ion-item-sliding *ngFor="let note of notes | async">
       <ion-item (click)="openDetailNote(note)">
         <h3>{{note.title}}</h3>
@@ -20,8 +20,6 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-  
-  <span *ngIf="!notes || notes.length < 1">Geen notities gevonden.</span>
 
   <ion-buttons class="fixed-add" end>
     <button ion-button (click)="openAddnote()">
