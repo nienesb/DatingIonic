@@ -9,7 +9,7 @@ import { HomePage } from "../home/home";
 })
 export class LoginPage {
   loading: Loading;
-  registerCredentials = { email: 'janine', password: 'greatplacetowork' };
+  registerCredentials = { email: '', password: '' };
 
 
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }

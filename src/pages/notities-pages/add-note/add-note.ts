@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {AlertController, IonicPage, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
 import {NotitiesPage} from "../notities/notities";
-import {PlatformDetailsPage} from "../../platform-details/platform-details";
 
 @IonicPage()
 @Component({
