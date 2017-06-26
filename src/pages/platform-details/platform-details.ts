@@ -9,6 +9,12 @@ import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database
 import {DetailNotePage} from "../notities-pages/detail-note/detail-note";
 
 
+/**
+ * Generated class for the PlatformDetailsPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
 @IonicPage()
 @Component({
   selector: 'page-platform-details',
@@ -16,12 +22,17 @@ import {DetailNotePage} from "../notities-pages/detail-note/detail-note";
 })
 export class PlatformDetailsPage {
   @ViewChild('lineCanvas') lineCanvas;
+  @ViewChild('barCanvas') barCanvas;
   public prognostics;
   public platform = this.navParams.get("platform");
   public selectedDate: any = moment().hour(1).minute(0).toISOString();
   public endDate: any = moment(this.selectedDate).add(1, 'days').toISOString();
   public scoreArray: Array<number> = new Array<number>();
   public labelArray: Array<string> = new Array<string>();
+
+  public statsArray: Array<number> = new Array<number>();
+  public barLabelArray: Array<String> = new Array<String>();
+
   public dayOrMonth = 'day';
   notes: FirebaseListObservable<any>;
 
@@ -45,6 +56,7 @@ export class PlatformDetailsPage {
 
   ionViewDidLoad() {
     this.createCanvas(this.scoreArray, this.labelArray);
+    this.createBarCanvas(this.statsArray, this.barLabelArray);
     this.getPrognostics(this.platform.id, this.selectedDate, this.endDate)
   }
 
@@ -57,11 +69,8 @@ export class PlatformDetailsPage {
           this.labelArray = [];
 
           if(data.length > 0) {
-            for (let prognostic of this.prognostics) {
-              this.scoreArray.push(parseInt(prognostic.score));
-              this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
-            }
-            this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+            this.updateLineChartForDailyPrognostics();
+            this.calculateTopsAndDowns(data);
           } else {
             this.showToast('Geen data gevonden');
           }
@@ -76,13 +85,12 @@ export class PlatformDetailsPage {
           this.prognostics = data;
           this.scoreArray = [];
           this.labelArray = [];
+          this.statsArray = [];
+          this.barLabelArray = [];
 
           if(data.length > 0) {
-            for (let prognostic of this.prognostics) {
-              this.scoreArray.push(parseInt(prognostic.averageProceedsDailyPercentage));
-              this.labelArray.push(moment(prognostic.date).format('MMM Do'));
-            }
-            this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+            this.updateLineChartForMonthlyPrognostics();
+            this.calculateTopsAndDowns(data);
           } else {
             this.showToast('Geen data gevonden');
           }
@@ -94,7 +102,24 @@ export class PlatformDetailsPage {
     }
   }
 
+  private updateLineChartForDailyPrognostics() {
+    for (let prognostic of this.prognostics) {
+      this.scoreArray.push(parseInt(prognostic.score));
+      this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
+    }
+    this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+  }
+
+  private updateLineChartForMonthlyPrognostics() {
+    for (let prognostic of this.prognostics) {
+      this.scoreArray.push(parseInt(prognostic.averageProceedsDailyPercentage));
+      this.labelArray.push(moment(prognostic.date).format('MMM Do'));
+    }
+    this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+  }
+
   private addData(chart, label, data) {
+
     chart.data.labels = label;
     chart.data.datasets[0].data = data;
     chart.update();
@@ -110,6 +135,42 @@ export class PlatformDetailsPage {
           data: this.scoreArray,
           label: "Score"
         }]
+      }
+    });
+  }
+
+  private createBarCanvas(statsArray, labelArray) {
+    this.barCanvas = new Chart(this.barCanvas.nativeElement, {
+
+      type: 'bar',
+      data: {
+        labels: labelArray,
+        datasets: [{
+          label: this.platform.name,
+          data: statsArray,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
       }
     });
   }
@@ -131,4 +192,57 @@ export class PlatformDetailsPage {
     this.navCtrl.push(DetailNotePage, {note: note});
   }
 
+
+  private calculateTopsAndDowns(prognostics) {
+    if(this.dayOrMonth == 'day') {
+      this.createBarGraphForDay(prognostics);
+    }
+  }
+
+  private createBarGraphForDay(prognostics) {
+    let highestProfitPercentage = [];
+    let lowestProfitPercentage = [];
+    let highestScore = [];
+    let lowestScore = [];
+
+    highestProfitPercentage[0] = null;
+    lowestProfitPercentage[0] = null;
+    highestScore[0] = null;
+    lowestScore[0] = null;
+
+    highestProfitPercentage[1] = '';
+    lowestProfitPercentage[1] = '';
+    highestScore[1] = '';
+    lowestScore[1] = '';
+
+    for (let prognostic of prognostics) {
+      if (parseInt(prognostic.profitPercentage) < lowestProfitPercentage[0] || lowestProfitPercentage[0] == null) {
+        lowestProfitPercentage[0] = parseInt(prognostic.profitPercentage);
+        lowestProfitPercentage[1] = prognostic.date.toString().substr(11, 2) + "U";
+      }
+      if (parseInt(prognostic.profitPercentage) > highestProfitPercentage[0] || highestProfitPercentage[0] == null) {
+        highestProfitPercentage[0] = parseInt(prognostic.profitPercentage);
+        highestProfitPercentage[1] = prognostic.date.toString().substr(11, 2) + "U";
+      }
+      if (parseInt(prognostic.score) < lowestScore[0] || lowestScore[0] == null) {
+        lowestScore[0] = parseInt(prognostic.score);
+        lowestScore[1] = prognostic.date.toString().substr(11, 2) + "U";
+      }
+      if (parseInt(prognostic.score) > highestScore[0] || highestScore[0] == null) {
+        highestScore[0] = parseInt(prognostic.score);
+        highestScore[1] = prognostic.date.toString().substr(11, 2) + "U";
+      }
+    }
+    console.log(highestScore[0]);
+    this.statsArray = [];
+    this.statsArray.push(lowestProfitPercentage[0]);
+    this.statsArray.push(highestProfitPercentage[0]);
+    this.statsArray.push(lowestScore[0]);
+    this.statsArray.push(highestScore[0]);
+    this.barLabelArray = ['L. Profit',
+      'H. Profit',
+      'L. Score',
+      'H. Score'];
+    this.addData(this.barCanvas, this.barLabelArray, this.statsArray);
+  }
 }

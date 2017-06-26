@@ -1,13 +1,11 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Notes</ion-title>
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <ion-title>Notities</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content padding>
-
   <ion-list>
     <ion-item-sliding *ngFor="let note of notes | async">
       <ion-item (click)="openDetailNote(note)">
@@ -28,5 +26,4 @@
       <ion-icon name="add-circle"></ion-icon>
     </button>
   </ion-buttons>
-
 </ion-content>

@@ -20,7 +20,7 @@
     </ion-card-content>
   </ion-card>
 
-  <button ion-button *ngIf="note.stat" (click)="openStat(note)">Zie details van toegevoegde statistiek
+  <button ion-button *ngIf="note.stat && note.stat.id" (click)="openStat(note)">Zie details van toegevoegde statistiek
   </button>
 
 </ion-content>

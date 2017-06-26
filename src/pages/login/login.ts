@@ -17,8 +17,13 @@ export class LoginPage {
   public login() {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
-      console.log(allowed);
+        console.log(allowed);
+
+      setTimeout(() => {
+        this.loading.dismiss();
         this.nav.setRoot(HomePage);
+      }, 1000);
+        
       },
       error => {
         this.showError("Login Failed");
@@ -27,8 +32,9 @@ export class LoginPage {
 
   showLoading() {
     this.loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-      dismissOnPageChange: true
+      content: 'Checking credentials...',
+      //dismissOnPageChange: true,
+      spinner: 'ios'
     });
     this.loading.present();
   }

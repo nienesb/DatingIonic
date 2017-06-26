@@ -17,6 +17,8 @@ export class NotitiesPage {
 
   constructor(public nav: NavController, public navParams: NavParams, af: AngularFireDatabase) {
     this.notes = af.list('/notes');
+    console.log('~~~Notes~~~');
+    console.log(this.notes);
   }
 
   ionViewDidLoad() {
