@@ -23,7 +23,7 @@
   </ion-item>
 
   <ion-buttons end>
-    <button ion-button block color="light" (click)="addNote()">Voeg toe</button>
+    <button ion-button [disabled]="noteTitle == null || noteNote == null" block color="light" (click)="addNote()">Voeg toe</button>
   </ion-buttons>
   <ion-buttons end>
     <button ion-button block color="danger" (click)="cancel(platform)">Annuleer</button>

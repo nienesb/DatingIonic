@@ -16,6 +16,7 @@ export class AddNotePage {
   noteNote: string;
   loading: Loading;
   platform;
+  isenabled: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFireDatabase,
               private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
