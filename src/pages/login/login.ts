@@ -23,7 +23,7 @@ export class LoginPage {
         this.loading.dismiss();
         this.nav.setRoot(HomePage);
       }, 1000);
-        
+
       },
       error => {
         this.showError("Login Failed");
@@ -32,7 +32,7 @@ export class LoginPage {
 
   showLoading() {
     this.loading = this.loadingCtrl.create({
-      content: 'Checking credentials...',
+      content: 'Gegevens controleren...',
       //dismissOnPageChange: true,
       spinner: 'ios'
     });
