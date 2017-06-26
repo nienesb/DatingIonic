@@ -46,7 +46,8 @@ export class PlatformDetailsPage {
       this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
     }
     else {
-      //this.selectedDate = moment(this.selectedDate).startOf('month').toISOString();
+      let beforeDate = this.selectedDate;
+      this.selectedDate = moment(beforeDate).set('date', 2).toISOString();
       this.endDate = moment(this.selectedDate).add(1, 'month').toISOString();
     }
     console.log(this.selectedDate);
