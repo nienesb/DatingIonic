@@ -15,7 +15,7 @@ export class LoginPage {
   constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
 
   public login() {
-    this.showLoading()
+    this.showLoading();
     this.auth.login(this.registerCredentials).subscribe(allowed => {
         console.log(allowed);
 
@@ -26,7 +26,7 @@ export class LoginPage {
 
       },
       error => {
-        this.showError("Login Failed");
+        this.showError("Login mislukt.");
       });
   }
 
