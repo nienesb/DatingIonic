@@ -42,12 +42,12 @@ export class PlatformDetailsPage {
   }
 
   updateDate() {
-    if(this.dayOrMonth == 'day') {
+    if (this.dayOrMonth == 'day') {
       this.endDate = moment(this.selectedDate).add(1, 'days').toISOString();
     }
     else {
-        //this.selectedDate = moment(this.selectedDate).startOf('month').toISOString();
-        this.endDate = moment(this.selectedDate).add(1, 'month').toISOString();
+      //this.selectedDate = moment(this.selectedDate).startOf('month').toISOString();
+      this.endDate = moment(this.selectedDate).add(1, 'month').toISOString();
     }
     console.log(this.selectedDate);
     this.getPrognostics(this.platform.id, this.selectedDate, this.endDate);
@@ -61,16 +61,16 @@ export class PlatformDetailsPage {
   }
 
   getPrognostics(platformId, start, end) {
-    if(this.dayOrMonth == 'day') {
+    if (this.dayOrMonth == 'day') {
       this.statsProvider.getDailyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
-        if(data) {
+        if (data) {
           this.prognostics = data;
           this.scoreArray = [];
           this.labelArray = [];
 
-          if(data.length > 0) {
+          if (data.length > 0) {
             this.updateLineChartForDailyPrognostics();
-            this.calculateTopsAndDowns(data);
+            this.createBarGraph(data);
           } else {
             this.showToast('Geen data gevonden');
           }
@@ -81,16 +81,16 @@ export class PlatformDetailsPage {
     }
     else {
       this.statsProvider.getMonthlyPrognosticForPlatform(platformId, start, end).subscribe((data) => {
-        if(data) {
+        if (data) {
           this.prognostics = data;
           this.scoreArray = [];
           this.labelArray = [];
           this.statsArray = [];
           this.barLabelArray = [];
 
-          if(data.length > 0) {
+          if (data.length > 0) {
             this.updateLineChartForMonthlyPrognostics();
-            this.calculateTopsAndDowns(data);
+            this.createBarGraph(data);
           } else {
             this.showToast('Geen data gevonden');
           }
@@ -104,10 +104,10 @@ export class PlatformDetailsPage {
 
   private updateLineChartForDailyPrognostics() {
     for (let prognostic of this.prognostics) {
-      this.scoreArray.push(parseInt(prognostic.score));
+      this.scoreArray.push(parseInt(prognostic.profitPercentage));
       this.labelArray.push(prognostic.date.toString().substr(11, 2) + "U");
     }
-    this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+    this.addData(this.lineCanvas, this.labelArray, this.scoreArray, "Profit %");
   }
 
   private updateLineChartForMonthlyPrognostics() {
@@ -115,13 +115,14 @@ export class PlatformDetailsPage {
       this.scoreArray.push(parseInt(prognostic.averageProceedsDailyPercentage));
       this.labelArray.push(moment(prognostic.date).format('MMM Do'));
     }
-    this.addData(this.lineCanvas, this.labelArray, this.scoreArray);
+    this.addData(this.lineCanvas, this.labelArray, this.scoreArray, "Profit %");
   }
 
-  private addData(chart, label, data) {
+  private addData(chart, label, data, dataLabel) {
 
     chart.data.labels = label;
     chart.data.datasets[0].data = data;
+    chart.data.datasets[0].label = dataLabel;
     chart.update();
   }
 
@@ -133,7 +134,7 @@ export class PlatformDetailsPage {
         labels: this.labelArray,
         datasets: [{
           data: this.scoreArray,
-          label: "Score"
+          label: "Profit %"
         }]
       }
     });
@@ -167,7 +168,7 @@ export class PlatformDetailsPage {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero:true
+              beginAtZero: true
             }
           }]
         }
@@ -188,61 +189,57 @@ export class PlatformDetailsPage {
     this.navCtrl.push(AddNotePage, {platform: platform});
   }
 
-  openDetailNote (note) {
+  openDetailNote(note) {
     this.navCtrl.push(DetailNotePage, {note: note});
   }
 
 
-  private calculateTopsAndDowns(prognostics) {
-    if(this.dayOrMonth == 'day') {
-      this.createBarGraphForDay(prognostics);
-    }
-  }
-
-  private createBarGraphForDay(prognostics) {
-    let highestProfitPercentage = [];
-    let lowestProfitPercentage = [];
-    let highestScore = [];
-    let lowestScore = [];
-
-    highestProfitPercentage[0] = null;
-    lowestProfitPercentage[0] = null;
-    highestScore[0] = null;
-    lowestScore[0] = null;
-
-    highestProfitPercentage[1] = '';
-    lowestProfitPercentage[1] = '';
-    highestScore[1] = '';
-    lowestScore[1] = '';
+  private createBarGraph(prognostics) {
+    let highestProfitPercentage = null;
+    let lowestProfitPercentage = null;
+    let highestScore = null;
+    let lowestScore = null;
 
     for (let prognostic of prognostics) {
-      if (parseInt(prognostic.profitPercentage) < lowestProfitPercentage[0] || lowestProfitPercentage[0] == null) {
-        lowestProfitPercentage[0] = parseInt(prognostic.profitPercentage);
-        lowestProfitPercentage[1] = prognostic.date.toString().substr(11, 2) + "U";
+      if (this.dayOrMonth == 'day') {
+        if (parseInt(prognostic.profitPercentage) < lowestProfitPercentage || lowestProfitPercentage == null) {
+          lowestProfitPercentage = parseInt(prognostic.profitPercentage);
+        }
+        if (parseInt(prognostic.profitPercentage) > highestProfitPercentage || highestProfitPercentage == null) {
+          highestProfitPercentage = parseInt(prognostic.profitPercentage);
+        }
+        if (parseInt(prognostic.score) < lowestScore || lowestScore == null) {
+          lowestScore = parseInt(prognostic.score);
+        }
+        if (parseInt(prognostic.score) > highestScore || highestScore == null) {
+          highestScore = parseInt(prognostic.score);
+        }
       }
-      if (parseInt(prognostic.profitPercentage) > highestProfitPercentage[0] || highestProfitPercentage[0] == null) {
-        highestProfitPercentage[0] = parseInt(prognostic.profitPercentage);
-        highestProfitPercentage[1] = prognostic.date.toString().substr(11, 2) + "U";
-      }
-      if (parseInt(prognostic.score) < lowestScore[0] || lowestScore[0] == null) {
-        lowestScore[0] = parseInt(prognostic.score);
-        lowestScore[1] = prognostic.date.toString().substr(11, 2) + "U";
-      }
-      if (parseInt(prognostic.score) > highestScore[0] || highestScore[0] == null) {
-        highestScore[0] = parseInt(prognostic.score);
-        highestScore[1] = prognostic.date.toString().substr(11, 2) + "U";
+      else {
+        if (parseInt(prognostic.averageProceedsDailyPercentage) < lowestProfitPercentage|| lowestProfitPercentage == null) {
+          lowestProfitPercentage = parseInt(prognostic.averageProceedsDailyPercentage);
+        }
+        if (parseInt(prognostic.averageProceedsDailyPercentage) > highestProfitPercentage || highestProfitPercentage == null) {
+          highestProfitPercentage = parseInt(prognostic.averageProceedsDailyPercentage);
+        }
+        if (parseInt(prognostic.proceedsToday) < lowestScore || lowestScore == null) {
+          lowestScore = parseInt(prognostic.proceedsToday);
+        }
+        if (parseInt(prognostic.proceedsToday) > highestScore || highestScore == null) {
+          highestScore = parseInt(prognostic.proceedsToday);
+        }
       }
     }
-    console.log(highestScore[0]);
+
     this.statsArray = [];
-    this.statsArray.push(lowestProfitPercentage[0]);
-    this.statsArray.push(highestProfitPercentage[0]);
-    this.statsArray.push(lowestScore[0]);
-    this.statsArray.push(highestScore[0]);
+    this.statsArray.push(lowestProfitPercentage);
+    this.statsArray.push(highestProfitPercentage);
+    this.statsArray.push(lowestScore);
+    this.statsArray.push(highestScore);
     this.barLabelArray = ['L. Profit',
       'H. Profit',
       'L. Score',
       'H. Score'];
-    this.addData(this.barCanvas, this.barLabelArray, this.statsArray);
+    this.addData(this.barCanvas, this.barLabelArray, this.statsArray, this.platform.name);
   }
 }
