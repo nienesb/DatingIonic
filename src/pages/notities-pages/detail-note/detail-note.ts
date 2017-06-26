@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {DailyStatPage} from "../../daily-stat/daily-stat";
 import {PlatformDetailsPage} from "../../platform-details/platform-details";
 
 /**
@@ -30,7 +29,7 @@ export class DetailNotePage {
     console.log('ionViewDidLoad DetailNotePage');
   }
 
-  private openStat (note) {
+  public openStat (note) {
     console.log(note);
     if(note.stat) {
       this.navCtrl.push(PlatformDetailsPage, {platform: note.stat});

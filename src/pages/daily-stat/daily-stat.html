@@ -1,29 +1,23 @@
 
 <ion-header>
-
   <ion-navbar>
     <ion-title>Details</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
   <ion-card>
-
     <ion-card-header>
       Name
     </ion-card-header>
-
     <ion-card-content>
       {{dailyStat.platform.name}}<br>
       {{dailyStat.platform.hostname}}
     </ion-card-content>
-
   </ion-card>
 
   <ion-card>
-
     <ion-card-header>
       Statistics
     </ion-card-header>
@@ -37,7 +31,6 @@
       <h4>Proceeds prognostic</h4> <br>
       {{dailyStat.proceedsPrognostic}}
     </ion-card-content>
-
   </ion-card>
 
   <ion-card>
@@ -48,5 +41,4 @@
       <canvas #barCanvas></canvas>
     </ion-card-content>
   </ion-card>
-
 </ion-content>
