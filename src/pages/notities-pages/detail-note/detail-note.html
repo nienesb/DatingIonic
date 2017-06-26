@@ -17,15 +17,29 @@
 
 <ion-content padding>
   <ion-card>
-    <ion-card-header>
+    <ion-card-header *ngIf="!edit">
       {{note.title}}
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content *ngIf="!edit">
       {{note.note}}
     </ion-card-content>
+    <ion-card-content *ngIf="edit">
+        <ion-item>
+          <ion-label floating>Titel</ion-label>
+          <ion-input type="text" [(ngModel)]="note.title"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>notitie</ion-label>
+          <ion-input type="text" [(ngModel)]="note.note"></ion-input>
+        </ion-item>
+    </ion-card-content>
+
   </ion-card>
 
-  <button ion-button *ngIf="note.stat && note.stat.id" (click)="openStat(note)">Zie details van toegevoegde statistiek
-  </button>
+  <button ion-button *ngIf="!edit && note.stat && note.stat.id" (click)="openStat(note)">Zie details van toegevoegde statistiek</button>
+
+  <button *ngIf="edit" ion-button left (click)="setEdit()">Annuleren</button>
+  <button *ngIf="edit" ion-button right (click)="editNote(note)">Opslaan</button>
+  <button *ngIf="!edit" (click)="setEdit()" ion-button right>Bewerken</button>
 
 </ion-content>

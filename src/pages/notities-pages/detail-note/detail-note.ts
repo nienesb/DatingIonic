@@ -19,6 +19,7 @@ export class DetailNotePage {
 
   note;
   public notes: FirebaseListObservable<any>;
+  public edit = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFireDatabase,
               public alertCtrl: AlertController) {
@@ -28,6 +29,19 @@ export class DetailNotePage {
   ngOnInit(): void {
     this.note = this.navParams.get("note");
     console.log(this.note);
+  }
+
+  public setEdit() {
+    this.edit = !this.edit;
+  }
+
+  public editNote (note) {
+    this.notes.update(note, {
+      title: this.note.title,
+      note: this.note.note
+    });
+
+    this.setEdit();
   }
 
   ionViewDidLoad() {
