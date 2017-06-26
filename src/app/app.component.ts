@@ -20,7 +20,7 @@ export class MyApp {
 
   constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private menuCtrl: MenuController) {
     this.pages = [
-      { title: 'platforms', component: HomePage } ,
+      { title: 'Platforms', component: HomePage } ,
       { title: 'Notitites', component: NotitiesPage } ,
       { title: 'Uitloggen', component: LoginPage }
     ];
