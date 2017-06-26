@@ -46,7 +46,7 @@ export class AddNotePage {
   cancel (platform) {
     if (platform) {
       console.log(platform);
-      this.navCtrl.setRoot(PlatformDetailsPage, {platform: platform});
+      this.navCtrl.pop();
     } else {
       this.navCtrl.setRoot(NotitiesPage);
     }
