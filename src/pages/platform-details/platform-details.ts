@@ -5,14 +5,10 @@ import 'moment/locale/nl';
 import {StatisticProvider} from "../../providers/statistic/statistic";
 import {Chart} from 'chart.js';
 import {AddNotePage} from "../notities-pages/add-note/add-note";
+import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
+import {DetailNotePage} from "../notities-pages/detail-note/detail-note";
 
 
-/**
- * Generated class for the PlatformDetailsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-platform-details',
@@ -27,8 +23,12 @@ export class PlatformDetailsPage {
   public scoreArray: Array<number> = new Array<number>();
   public labelArray: Array<string> = new Array<string>();
   public dayOrMonth = 'day';
+  notes: FirebaseListObservable<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider, public toastCtrl: ToastController) { }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statsProvider: StatisticProvider,
+              public toastCtrl: ToastController, af: AngularFireDatabase) {
+    this.notes = af.list('/notes');
+  }
 
   updateDate() {
     if(this.dayOrMonth == 'day') {
@@ -126,4 +126,9 @@ export class PlatformDetailsPage {
   openNotes(platform) {
     this.navCtrl.push(AddNotePage, {platform: platform});
   }
+
+  openDetailNote (note) {
+    this.navCtrl.push(DetailNotePage, {note: note});
+  }
+
 }

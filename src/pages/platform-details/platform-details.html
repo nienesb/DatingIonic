@@ -46,6 +46,18 @@
   </ion-card>
   <hr>
   <canvas [hidden]="!prognostics || prognostics.length < 1" #lineCanvas></canvas>
+
+  <hr>
+  <h2>Notes {{platform.name ? platform.name : 'PlatformDetails'}}</h2>
+    <ion-card (click)="openDetailNote(note)" *ngFor="let note of notes | async">
+      <ion-card-header>
+        {{note.title}}
+      </ion-card-header>
+      <ion-card-content>
+        {{note.note}}
+      </ion-card-content>
+    </ion-card>
+
 </ion-content>
 
 

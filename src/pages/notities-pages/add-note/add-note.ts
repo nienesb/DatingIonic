@@ -42,12 +42,13 @@ export class AddNotePage {
     this.navCtrl.setRoot(NotitiesPage);
   }
 
-
   cancel (platform) {
-    if (this.platform) {
+    if (platform) {
+      console.log(platform);
       this.navCtrl.setRoot(PlatformDetailsPage, {platform: platform});
     } else {
-      this.navCtrl.setRoot(NotitiesPage)};
+      this.navCtrl.setRoot(NotitiesPage);
+    }
   }
 
   showLoading() {
