@@ -35,7 +35,7 @@
   <hr>
   <ion-card>
     <ion-card-header>
-      Name
+      Naam
     </ion-card-header>
 
     <ion-card-content>
@@ -51,7 +51,7 @@
   <canvas [hidden]="!prognostics || prognostics.length < 1" #barCanvas></canvas>
 
   <hr>
-  <h2>Notes {{platform.name ? platform.name : 'PlatformDetails'}}</h2>
+  <h2>Notities {{platform.name ? platform.name : 'PlatformDetails'}}</h2>
     <ion-card (click)="openDetailNote(note)" *ngFor="let note of notes | async">
       <ion-card-header>
         {{note.title}}
