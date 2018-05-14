@@ -5,6 +5,7 @@ pipeline {
       steps {
         sh '''npm stop
 npm start'''
+        bat 'npm install'
       }
     }
   }
