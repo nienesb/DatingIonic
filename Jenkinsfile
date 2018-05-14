@@ -3,8 +3,6 @@ pipeline {
   stages {
     stage('error') {
       steps {
-        sh '''npm stop
-npm start'''
         bat 'npm install'
       }
     }
